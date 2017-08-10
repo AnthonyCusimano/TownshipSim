@@ -11,8 +11,17 @@ public class Location {
 
     }
 
+    public Location (String _name, Location _parent){
+
+        this.name = _name;
+        this.ParentLocation = _parent;
+
+    }
+
     /******
      *  this method creates a connection between _AL and this Location
+     *  calling this method once will connect both Locations to eachother
+     *  not just one to the other
      * */
     public void CreateConnection(Location _AL){
 
@@ -46,6 +55,7 @@ public class Location {
      */
     public Vector<Location> connections;
     public Vector<Location> Rooms;
+    public Location ParentLocation;
     //need a vector for townsfolk at this location
 
 
