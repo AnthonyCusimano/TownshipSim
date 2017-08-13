@@ -1,14 +1,58 @@
 /**
  * Created by Anthony on 8/6/2017.
  */
+
+import java.util.Scanner;
+
 public class Town {
 
     public Town(){
 
-        System.out.println("Town is created");
+        System.out.println("Town being created");
 
         //13 is temp number
-        townLocations = new Location[LocationCount];
+        townLocations = new Location[STAT_LOCATION_COUNT];
+
+        this.CreateLocations();
+
+
+        System.out.println("Town setting up connections");
+
+        this.SetupConnections();
+
+        System.out.println("Town creation finished");
+
+        this.inputFeed = new Scanner (System.in);
+
+        this.inputFeed.next();
+        //use input to figure out where to go next
+
+    }
+
+    public final Location getLocationAtAddress(int _ad){
+
+        return this.townLocations[_ad];
+
+    }
+
+    public final Location getLocationByName (String _ad){
+
+        for (int i = 0; i < STAT_LOCATION_COUNT; ++i){
+
+            if (this.townLocations[i].getName() == _ad){
+
+                return this.townLocations[i];
+
+            }
+
+        }
+
+        //error
+        return this.townLocations[0];
+
+    }
+
+    private void CreateLocations(){
 
         //names for each location
         //should be done from text doc
@@ -32,7 +76,7 @@ public class Town {
         townLocations[13] = new Location("North Path");
         townLocations[14] = new Location("South Path");
 
-        //later
+        //TODO: IMPLEMENT CHILD LOCATIONS
         //rooms (Locations within buildings
         //your house
         /*townLocations[15] = new Location("Your Bedroom");
@@ -43,35 +87,12 @@ public class Town {
         townLocations[20] = new Location("Unnamed location");
         townLocations[21] = new Location("Unnamed location");*/
 
-
-        this.SetupConnections();
-
     }
 
-    public final Location getLocationAtAddress(int _ad){
-
-        return this.townLocations[_ad];
-
-    }
-
-    public final Location getLocationByName (String _ad){
-
-        for (int i = 0; i < LocationCount; ++i){
-
-            if (this.townLocations[i].getName() == _ad){
-
-                return this.townLocations[i];
-
-            }
-
-        }
-
-        //error
-        return this.townLocations[0];
-
-    }
-
-   private void SetupConnections(){
+/*
+ * creates mutual connections between locations within the town
+ * */
+    private void SetupConnections(){
 
        //your house <--> bus stop
        this.townLocations[0].CreateConnection(this.townLocations[2]);
@@ -92,12 +113,22 @@ public class Town {
        //bus stop <--> library
        this.townLocations[2].CreateConnection(this.townLocations[7]);
 
+    }
+
+    /*
+    * creates rooms with mutual locations to their parent locations
+    * */
+    private void SetupInnerLocations(){
+
+        System.out.println("SetupInnerLocations is being called without affect");
 
     }
 
     //temp number
     public Location[] townLocations;
    //number of locations in town, including rooms
-    private static final int LocationCount = 22;
+    private static final int STAT_LOCATION_COUNT = 22;
+    //
+    private Scanner inputFeed;
 
 }
